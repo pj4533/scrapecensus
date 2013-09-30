@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'commander/import'
+require 'terminal-table'
+require 'term/ansicolor'
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+HighLine.track_eof = false # Fix for built-in Ruby
+Signal.trap("INT") {} # Suppress backtrace when exiting command
+
+program :version, "0.0.1"
+program :description, 'Scripts for scraping census data'
+
+program :help, 'Author', 'PJ Gray <pj@evertrue.com>'
+program :help_formatter, :compact
+
+default_command :help
+
+require 'scrapecensus'
