@@ -28,7 +28,7 @@ def census_metric_for_lat_lng(api_key,metric,lat,lng)
 
 	conn = Faraday.new(:url => 'http://api.census.gov/') do |faraday|
 	  faraday.request  :url_encoded             # form-encode POST params
-	  faraday.response :logger  
+	  # faraday.response :logger  
 	  faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
 	end
 
@@ -76,7 +76,7 @@ command :'file:metric' do |c|
 	  		current_index += 1
 	    	person_id, lat, lng = row
 			metric = census_metric_for_lat_lng(api_key,census_metric_id,lat,lng)
-			say_ok "**** (" + current_index.to_s + ") " + person_id.to_s + " = " + metric
+			say_ok "**** (" + current_index.to_s + ") " + person_id.to_s + " = " + metric.to_s
 			file.write(person_id.to_s + "," + metric.to_s + "\n")
 	    end
 
