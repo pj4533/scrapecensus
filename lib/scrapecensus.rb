@@ -44,11 +44,17 @@ def census_metric_for_lat_lng(api_key,metric,lat,lng)
 			:for => 'tract:' + tract,
 			:in => 'state:' + state + '+county:' + county
 		}
-		json_response = JSON.parse(response.body)
 
-		metric_hash = Hash[json_response[0].map.with_index.to_a]
-		metric_index = metric_hash["#{metric}"]
-		return json_response[1][metric_index]
+		if response.body and response.body != ''
+			json_response = JSON.parse(response.body)
+
+			metric_hash = Hash[json_response[0].map.with_index.to_a]
+			metric_index = metric_hash["#{metric}"]
+			return json_response[1][metric_index]
+		else
+			puts response.status
+			return nil			
+		end
 	else
 		return nil		
 	end
